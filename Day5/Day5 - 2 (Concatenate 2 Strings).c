@@ -1,3 +1,9 @@
+/*
+ * Day5 - 2 (Concatenate 2 Strings).c
+ *
+ *  Created on: Feb 14, 2024
+ *      Author: loay_negm
+ */
 #include<stdio.h>
 #include<stdlib.h>
 
