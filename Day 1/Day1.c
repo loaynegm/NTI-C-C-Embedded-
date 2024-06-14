@@ -1,5 +1,5 @@
 /*
- * Day.c
+ * Day1.c
  *
  *  Created on: Feb 10, 2024
  *      Author: loay_negm
