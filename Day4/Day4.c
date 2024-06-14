@@ -1,3 +1,9 @@
+/*
+ * Day4.c
+ *
+ *  Created on: Feb 15, 2024
+ *      Author: loay_negm
+ */
 #include<stdio.h>
 #include<stdlib.h>
 
