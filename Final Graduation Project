@@ -1,0 +1,365 @@
+/*
+ * Payroll Application Using Structure.c
+ *
+ *  Created on: Apr 3, 2024
+ *      Author: loay_negm
+ */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define FILENAME "E://project.csv"
+
+struct listnode {
+struct listnode *prev;
+int id ;
+int score ;
+int salary;
+struct listnode *next;
+
+};
+struct listnode *creatlist();
+void createnode(struct listnode *first);
+void display_list(struct listnode *first);
+int display_reverse(struct listnode *first);
+struct listnode *add_node_instarte(struct listnode *first);
+void add_node_in_med(struct listnode *first);
+void delete_from_first(struct listnode *first);
+struct listnode *delete_first_node(struct listnode *first);
+struct listnode *delete_node(struct listnode *first);
+struct listnode *delete_last_node(struct listnode *first);
+void save(struct listnode *first,int l){
+    struct listnode *firstcopy=first;
+    int i;
+    for(i=0;i<l;i++){
+        FILE *filePtr = fopen(FILENAME, "a");
+
+        fprintf(filePtr, "%d,%d,%d\n",firstcopy->id,firstcopy->score,firstcopy->salary);
+        firstcopy=firstcopy->next;
+        fclose(filePtr);
+    }}
+void update(struct listnode *first){
+    int n;
+struct listnode *firstcopy=first;
+    int i;
+    printf("enter number of element to update\n");
+    scanf("%d",&n);
+    for(i=1;i<n;i++){
+    firstcopy=firstcopy->next;
+}
+printf("enter new data   id , score , salary\n");
+scanf("%d%d%d",&firstcopy->id,&firstcopy->score,&firstcopy->salary);
+}
+
+
+int main()
+{
+    int u;
+    printf("you need create press 1 or append press 2 ");
+     scanf("%d",&u);
+     while (getchar() != '\n');
+
+
+    if (u==1){
+    char c1_name[20];
+    char c2_name[20];
+    char c3_name[20];
+
+
+printf("Enter Column 1 Name: ");
+        fgets(c1_name, sizeof(c1_name), stdin);
+        c1_name[strcspn(c1_name, "\n")] = '\0';
+        printf("Enter Column 2 Name: ");
+        fgets(c2_name, sizeof(c2_name), stdin);
+        c2_name[strcspn(c2_name, "\n")] = '\0';
+        printf("Enter Column 3 Name: ");
+        fgets(c3_name, sizeof(c3_name), stdin);
+        c3_name[strcspn(c3_name, "\n")] = '\0';
+
+        printf("Database Created \n ");
+        FILE *filePtr = fopen(FILENAME, "w");
+
+
+      /*  if (filePtr == NULL)
+        {
+            fprintf(stderr, "Error opening file for writing.\n");
+            return 1;
+        }*/
+
+        fprintf(filePtr, "%s,%s,%s\n", c1_name, c2_name, c3_name);
+        fclose(filePtr);
+
+    int l,x;
+    char op;
+    struct listnode *first=NULL;
+    first=creatlist();
+    createnode(first);
+    while(1){
+    printf("if you need add from start press 1\n");
+    printf("if you need add from any position press 2\n");
+    printf("if you need delete from start press 3\n");
+    printf("if you need delete from any position press 4\n");
+    printf("if you need delete last element press 5\n");
+    printf("if you need update element press 6\n");
+    printf("if you need exit 7\n");
+    scanf("%d",&x);
+    if(x==1)
+        first=add_node_instarte(first);
+    if(x==2)
+        add_node_in_med(first);
+    if(x==3)
+        first=delete_first_node(first);
+    if(x==4)
+        first=delete_node(first);
+    if(x==5)
+        first=delete_last_node(first);
+    if(x==6)
+        update(first);
+    if(x==7)
+        break;
+
+    }
+    display_list(first);
+        l= display_reverse(first);
+  printf("if you need save in excel press y else n\n");
+  scanf(" %c",&op);
+    if(op=='y'){
+            save(first,l);
+         printf("data saved \n");
+    }
+    else exit(0);}
+    else{
+    int l,x;
+    char op;
+    struct listnode *first=NULL;
+    first=creatlist();
+    createnode(first);
+    while(1){
+    printf("if you need add from start press 1\n");
+    printf("if you need add from any position press 2\n");
+    printf("if you need delete from start press 3\n");
+    printf("if you need delete from any position press 4\n");
+    printf("if you need delete last element press 5\n");
+    printf("if you need update element press 6\n");
+    printf("if you need exit 7\n");
+    scanf("%d",&x);
+    if(x==1)
+        first=add_node_instarte(first);
+    if(x==2)
+        add_node_in_med(first);
+    if(x==3)
+        first=delete_first_node(first);
+    if(x==4)
+        first=delete_node(first);
+    if(x==5)
+        first=delete_last_node(first);
+    if(x==6)
+        update(first);
+    if(x==7)
+        break;
+
+    }
+    display_list(first);
+        l= display_reverse(first);
+  printf("if you need save in excel press y else n\n");
+  scanf(" %c",&op);
+    if(op=='y'){
+            save(first,l);
+         printf("data saved \n");
+    }
+    else exit(0);}
+
+    return 0;
+
+}
+
+struct listnode *creatlist(){
+int id1 ;
+int score1 ;
+int salary1;
+struct listnode *first=(struct listnode *)malloc(sizeof(struct listnode));
+if (first==NULL){
+
+printf("memory unallocated\n");
+exit(0);
+}
+else{
+    printf("enter first data \n");
+     scanf("%d%d%d",&id1,&score1,&salary1);
+     first->id=id1;
+    first->score=score1;
+    first->salary=salary1;
+    first->next=NULL;
+    first->prev=NULL;
+}
+return first;
+
+};
+void createnode(struct listnode *first){
+    int i=2;
+   struct listnode *firstcopy=first;
+   while(1){
+   char op;
+    printf("if you want add press y else n \n");
+    scanf(" %c",&op);
+    if(op=='y'){
+struct listnode * node=(struct listnode*)malloc(sizeof(struct listnode));
+if (node==NULL){
+    printf("unable to add \n");
+}
+else{
+    printf("enter data number %d \n",i);
+    i++;
+    scanf("%d%d%d",&node->id,&node->score,&node->salary);
+    node->next=NULL;
+    firstcopy->next=node;
+    node->prev=firstcopy;
+    firstcopy=firstcopy->next;
+}
+   }
+else break;
+   }
+}
+struct listnode *add_node_instarte(struct listnode *first){
+    int data;
+struct listnode* node=(struct listnode*)malloc(sizeof(struct listnode));
+if (node==NULL){
+    printf("unable to add \n");
+}
+else{
+      printf("enter data of stare node\n");
+scanf("%d%d%d",&node->id,&node->score,&node->salary);
+
+first->prev=node;
+node->next=first;
+first=node;
+node->prev=NULL;
+
+
+}return first;
+}
+void add_node_in_med(struct listnode *first){
+    struct listnode *first_coby;
+    first_coby=first;
+    int n,i;
+    printf("please enter position of node\n");
+    scanf("%d",&n);
+    for(i=1;i<n-1;i++){
+       first_coby=first_coby->next;
+    }
+    int data;
+struct listnode* node=(struct listnode*)malloc(sizeof(struct listnode));
+if (node==NULL){
+    printf("unable to add \n");
+}
+else{
+      printf("enter data of medial node\n");
+scanf("%d%d%d",&node->id,&node->score,&node->salary);
+node->next=first_coby->next;
+first_coby->next->prev=node;
+node->prev=first_coby;
+first_coby->next=node;
+
+
+
+}
+return 0;
+}
+
+
+void display_list(struct listnode *first) {
+    struct listnode *first_copy = first;
+
+    int i = 0;
+    while (first_copy != NULL) {
+        printf("data for element n %d id:%d score :%d salary:%d\n", i + 1, first_copy->id, first_copy->score, first_copy->salary);
+
+        first_copy = first_copy->next;
+        i++;
+    }
+    printf("the list element is %d\n", i);
+
+}
+
+struct listnode *delete_first_node(struct listnode *first) {
+    if (first == NULL) {
+        printf("The list is empty. Unable to delete.\n");
+        return NULL;
+    }
+
+    struct listnode *first_copy = first;
+    first = first->next;
+    first->prev = NULL;
+    free(first_copy);
+    printf("First node deleted successfully.\n");
+
+    return first;
+}
+struct listnode *delete_node(struct listnode *first){
+    struct listnode *first_coby;
+    struct listnode *temp;
+    first_coby=first;
+    int n,i;
+printf("please enter number of node that you need delete\n");
+scanf("%d",&n);
+if(n==1){
+    first=delete_first_node(first);
+}
+else{
+  for(i=1;i<n-1 && first_coby->next!= NULL;i++){
+       first_coby=first_coby->next;
+    }
+    if (first_coby->next == NULL) {
+            printf("Node %d not found.\n", n);
+            return first;
+        }
+    temp=first_coby->next;
+    first_coby->next->next->prev=first_coby;
+    first_coby->next=first_coby->next->next;
+    free(temp);
+   printf(" node %d deleted successfully.\n",n);
+
+}
+return first;
+}
+struct listnode *delete_last_node(struct listnode *first){
+struct listnode *first_coby;
+struct listnode *temp;
+    first_coby=first;
+  while(first_coby->next!=NULL){
+        temp=first_coby;
+    first_coby=first_coby->next;
+  }
+  temp->next=NULL;
+
+
+  free(first_coby);
+
+
+
+printf(" last node  deleted successfully.\n");
+
+return first;
+}
+
+int display_reverse(struct listnode *first) {
+    if (first == NULL) {
+        printf("The list is empty.\n");
+        return;
+    }
+
+    struct listnode *last = first;
+    while (last->next != NULL) {
+        last = last->next;
+    }
+
+    int i = 0;
+    while (last != NULL) {
+        printf("data for element n %d id:%d score :%d salary:%d\n", i + 1, last->id, last->score, last->salary);
+        last = last->prev;
+        i++;
+    }
+    printf("the list element is %d\n", i);
+    return i;
+}
