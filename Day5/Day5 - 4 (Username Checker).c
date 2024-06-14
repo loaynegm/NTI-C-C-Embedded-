@@ -1,3 +1,9 @@
+/*
+ * Day5 - 4 (UpperCase To LowerCase).c
+ *
+ *  Created on: Feb 18, 2024
+ *      Author: loay_negm
+ */
 #include<stdio.h>
 #include<stdlib.h>
  
